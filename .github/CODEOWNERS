@@ -1,0 +1,34 @@
+# CODEOWNERS
+# 
+# This file defines who is automatically assigned as reviewers for PRs
+# based on which files are changed.
+#
+# Format: <pattern> <owner(s)>
+# More specific rules override less specific ones.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default: all files require review from the project lead
+* @Amitpwa
+
+# Core OS and install scripts
+/install.sh @Amitpwa
+/scripts/ @Amitpwa
+
+# Documentation — any contributor can update docs; still requires 1 review
+/docs/ @Amitpwa
+/README.md @Amitpwa
+/CONTRIBUTING.md @Amitpwa
+/CHANGELOG.md @Amitpwa
+
+# Security-sensitive files — require project lead review
+/SECURITY.md @Amitpwa
+
+# GitHub community files
+/.github/ @Amitpwa
+
+# Adapter framework
+/adapters/ @Amitpwa
+
+# AI and GPU provisioning
+/ai/ @Amitpwa
+/cuda/ @Amitpwa

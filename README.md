@@ -1,7 +1,6 @@
-# amitOS
-amitOS – An AI-ready, Debian-based industrial automation OS with native OPC UA/DA support, Netplan, Nginx, adapter integration, and secure networking built-in. Powering smart industries with performance and simplicity.
+<div align="center">
 
-# 🛠️ AmitOS – An InduOS Operating System
+# �️ amitOS
 
 **AmitOS** is a lightweight, secure, and AI-enabled operating system built specifically for **industrial automation and edge computing**. Powered by a hardened **Debian core**, AmitOS is designed to bring simplicity, performance, and intelligence to modern industrial systems.
 
