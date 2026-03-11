@@ -1,6 +1,6 @@
-<div align="center">
+<div align="left">
 
-# �️ amitOS
+# amitOS
 
 **AmitOS** is a lightweight, secure, and AI-enabled operating system built specifically for **industrial automation and edge computing**. Powered by a hardened **Debian core**, AmitOS is designed to bring simplicity, performance, and intelligence to modern industrial systems.
 
