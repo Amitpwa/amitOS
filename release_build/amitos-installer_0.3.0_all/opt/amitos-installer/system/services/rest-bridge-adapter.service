@@ -1,0 +1,34 @@
+# ============================================================================
+# amitOS — REST API Bridge Adapter Service
+# ============================================================================
+
+[Unit]
+Description=amitOS REST API Bridge Adapter (HTTP/REST)
+Documentation=https://github.com/Amitpwa/amitOS/blob/dev/docs/ADAPTERS.md
+After=network-online.target opcua-server.service nginx.service
+Wants=network-online.target
+PartOf=amitos-adapters.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/opt/amitos/adapters/venv/bin/python3 -m amitos.adapters.rest_bridge --config /etc/amitos/adapters/rest-bridge.yaml
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=/opt/amitos/adapters
+
+LimitNOFILE=8192
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/log/amitos
+ConfigurationDirectory=amitos/adapters
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=rest-bridge-adapter
+
+[Install]
+WantedBy=amitos-adapters.target multi-user.target

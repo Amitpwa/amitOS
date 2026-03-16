@@ -1,0 +1,46 @@
+# ============================================================================
+# amitOS — Siemens S7 Adapter Configuration
+# ============================================================================
+# File location: /etc/amitos/adapters/siemens-s7.yaml
+# Documentation: docs/ADAPTERS.md
+# ============================================================================
+
+adapter:
+  name: siemens-s7
+  version: "1.0.0"
+  enabled: false          # Enable when S7 PLC is available
+  log_level: info
+
+connection:
+  host: "192.168.1.30"
+  port: 102               # ISO-on-TCP
+  rack: 0
+  slot: 1
+  timeout: 5.0            # seconds
+  retries: 3
+
+polling:
+  interval: 1.0           # seconds
+
+# Data block mappings — read S7 data blocks into OPC UA nodes
+data_blocks:
+  - name: "motor_speed"
+    db_number: 1
+    start_address: 0
+    data_type: real        # bool | byte | word | dword | int | dint | real
+    opcua_node: "ns=2;s=Motor.Speed"
+    unit: "RPM"
+
+  - name: "motor_running"
+    db_number: 1
+    start_address: 4
+    data_type: bool
+    bit_offset: 0
+    opcua_node: "ns=2;s=Motor.Running"
+
+  - name: "conveyor_position"
+    db_number: 2
+    start_address: 0
+    data_type: dint
+    opcua_node: "ns=2;s=Conveyor.Position"
+    unit: "mm"

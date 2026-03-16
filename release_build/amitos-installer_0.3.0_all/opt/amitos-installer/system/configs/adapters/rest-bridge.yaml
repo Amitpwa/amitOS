@@ -1,0 +1,66 @@
+# ============================================================================
+# amitOS — REST API Bridge Adapter Configuration
+# ============================================================================
+# File location: /etc/amitos/adapters/rest-bridge.yaml
+# Documentation: docs/ADAPTERS.md
+# ============================================================================
+
+adapter:
+  name: rest-bridge
+  version: "1.0.0"
+  enabled: true
+  log_level: info
+
+server:
+  host: "0.0.0.0"
+  port: 8080
+  workers: 4
+
+  # CORS settings
+  cors:
+    enabled: true
+    allow_origins: ["*"]
+    allow_methods: ["GET", "POST", "PUT", "DELETE"]
+
+  # Authentication
+  auth:
+    enabled: false
+    type: api_key          # api_key | bearer | basic
+    api_key: ""
+
+  # TLS (usually handled by Nginx reverse proxy instead)
+  tls:
+    enabled: false
+
+# Endpoint mappings — expose OPC UA nodes as REST endpoints
+endpoints:
+  - path: "/api/v1/temperature"
+    method: GET
+    opcua_node: "ns=2;s=Temperature.Sensor1"
+    response_format: json
+    cache_ttl: 5           # seconds
+
+  - path: "/api/v1/valve"
+    method: GET
+    opcua_node: "ns=2;s=Valve.Status"
+    response_format: json
+
+  - path: "/api/v1/setpoint"
+    method: POST
+    opcua_node: "ns=2;s=Setpoint.Temperature"
+    request_format: json
+    validation:
+      min: 0
+      max: 100
+      data_type: float32
+
+# Webhook notifications — push OPC UA value changes to external endpoints
+webhooks:
+  - name: "temperature_alert"
+    opcua_node: "ns=2;s=Temperature.Sensor1"
+    condition: "value > 80.0"
+    url: "https://alerts.example.com/webhook"
+    method: POST
+    headers:
+      Content-Type: "application/json"
+    retry: 3

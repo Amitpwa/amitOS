@@ -1,0 +1,15 @@
+# ============================================================================
+# amitOS — Adapters Target (group unit)
+# ============================================================================
+# Allows starting/stopping all adapters as a group:
+#   systemctl start amitos-adapters.target
+#   systemctl stop amitos-adapters.target
+# ============================================================================
+
+[Unit]
+Description=amitOS Industrial Adapters
+Documentation=https://github.com/Amitpwa/amitOS/blob/dev/docs/ADAPTERS.md
+After=network-online.target opcua-server.service
+
+[Install]
+WantedBy=multi-user.target

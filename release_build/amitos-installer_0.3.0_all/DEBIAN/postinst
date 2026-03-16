@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+chmod +x /opt/amitos-installer/gui-installer.sh
+chmod +x /opt/amitos-installer/install.sh
+ln -sf /opt/amitos-installer/gui-installer.sh /usr/local/bin/amitos-installer
+
+echo "================================================================="
+echo "amitOS Installer v.0.3.0 installed successfully!"
+echo "Run 'sudo amitos-installer' to start the setup wizard."
+echo "================================================================="

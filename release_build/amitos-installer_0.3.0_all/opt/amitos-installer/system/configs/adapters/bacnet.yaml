@@ -1,0 +1,53 @@
+# ============================================================================
+# amitOS — BACnet Adapter Configuration
+# ============================================================================
+# File location: /etc/amitos/adapters/bacnet.yaml
+# Documentation: docs/ADAPTERS.md
+# ============================================================================
+
+adapter:
+  name: bacnet
+  version: "1.0.0"
+  enabled: false          # Enable when BACnet devices are available
+  log_level: info
+
+connection:
+  interface: "eth0"
+  port: 47808             # BACnet/IP default (0xBAC0)
+  device_id: 100          # This adapter's BACnet device ID
+  timeout: 5.0
+  retries: 3
+
+  # BBMD (BACnet Broadcast Management Device) — for multi-subnet
+  bbmd:
+    enabled: false
+    address: "192.168.1.1"
+    ttl: 30
+
+polling:
+  interval: 5.0           # seconds (BACnet is typically polled less frequently)
+
+# Object mappings — read BACnet objects into OPC UA nodes
+objects:
+  - name: "room_temperature"
+    device_id: 200
+    object_type: analog_input    # analog_input | analog_output | analog_value | binary_input | binary_output | binary_value
+    object_instance: 1
+    property: present_value
+    opcua_node: "ns=2;s=Room.Temperature"
+    unit: "°C"
+
+  - name: "damper_position"
+    device_id: 200
+    object_type: analog_output
+    object_instance: 1
+    property: present_value
+    opcua_node: "ns=2;s=Damper.Position"
+    unit: "%"
+
+  - name: "fan_status"
+    device_id: 200
+    object_type: binary_input
+    object_instance: 1
+    property: present_value
+    opcua_node: "ns=2;s=Fan.Status"

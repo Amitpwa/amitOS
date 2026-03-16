@@ -1,0 +1,59 @@
+# ============================================================================
+# amitOS — MQTT Adapter Configuration
+# ============================================================================
+# File location: /etc/amitos/adapters/mqtt.yaml
+# Documentation: docs/ADAPTERS.md
+# ============================================================================
+
+adapter:
+  name: mqtt
+  version: "1.0.0"
+  enabled: true
+  log_level: info
+
+connection:
+  broker: "mqtt://192.168.1.20:1883"
+  client_id: "amitos-mqtt-adapter"
+  clean_session: true
+  keepalive: 60           # seconds
+  reconnect_delay: 5      # seconds
+  reconnect_max_delay: 60 # seconds
+
+  # Authentication (optional)
+  auth:
+    username: ""
+    password: ""
+
+  # TLS (optional)
+  tls:
+    enabled: false
+    ca_cert: "/etc/amitos/certs/ca.crt"
+    client_cert: "/etc/amitos/certs/client.crt"
+    client_key: "/etc/amitos/certs/client.key"
+
+  # MQTT v5 settings (optional)
+  protocol_version: 5     # 3 (v3.1.1) or 5 (v5.0)
+
+# Topic subscriptions — bridge MQTT topics to OPC UA nodes
+subscriptions:
+  - topic: "factory/line1/temperature"
+    qos: 1                 # 0 | 1 | 2
+    data_type: float32
+    opcua_node: "ns=2;s=Line1.Temperature"
+
+  - topic: "factory/line1/status"
+    qos: 1
+    data_type: string
+    opcua_node: "ns=2;s=Line1.Status"
+
+  - topic: "factory/line1/production_count"
+    qos: 0
+    data_type: uint32
+    opcua_node: "ns=2;s=Line1.ProductionCount"
+
+# Topic publishing — bridge OPC UA changes to MQTT topics
+publications:
+  - opcua_node: "ns=2;s=Setpoint.Temperature"
+    topic: "factory/setpoints/temperature"
+    qos: 1
+    retain: true

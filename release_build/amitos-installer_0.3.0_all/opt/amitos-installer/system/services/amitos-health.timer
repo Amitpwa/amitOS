@@ -1,0 +1,15 @@
+# ============================================================================
+# amitOS — Health Monitor Timer (runs every 60 seconds)
+# ============================================================================
+
+[Unit]
+Description=amitOS Health Monitor Timer
+
+[Timer]
+OnBootSec=30
+OnUnitActiveSec=60
+Unit=amitos-health.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

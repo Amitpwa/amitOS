@@ -1,0 +1,8 @@
+Package: amitos-installer
+Version: 0.3.0
+Architecture: all
+Maintainer: Ashutosh Pandey <ashutoshpandeyies@gmail.com>
+Description: amitOS Official Installer
+ GUI Installer wizard for amitOS, the Industrial Edge AI OS.
+ Contains the amitFS filesystem kernel module, Netplan+Nginx configs,
+ and OPC UA / Industrial adapters.

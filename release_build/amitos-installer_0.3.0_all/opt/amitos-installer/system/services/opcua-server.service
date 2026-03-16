@@ -1,0 +1,49 @@
+# ============================================================================
+# amitOS — OPC UA Server (open62541)
+# ============================================================================
+# systemd service unit for the open62541-based OPC UA server.
+# Install to: /etc/systemd/system/opcua-server.service
+# ============================================================================
+
+[Unit]
+Description=amitOS OPC UA Server (open62541)
+Documentation=https://github.com/Amitpwa/amitOS/blob/dev/docs/ARCHITECTURE.md
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=notify
+ExecStartPre=/opt/amitos/scripts/amitos-check.sh --service opcua
+ExecStart=/opt/amitos/opcua/opcua-server --config /etc/amitos/opcua/server.xml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=10
+
+# Watchdog — restart if unresponsive for 30s
+WatchdogSec=30
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/log/amitos /run/amitos
+ConfigurationDirectory=amitos/opcua
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opcua-server
+
+# Environment
+Environment=OPCUA_LOG_LEVEL=info
+Environment=OPCUA_PORT=4840
+
+[Install]
+WantedBy=multi-user.target
