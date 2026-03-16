@@ -1,0 +1,14 @@
+# ============================================================================
+# amitOS — Health Monitor Service
+# ============================================================================
+
+[Unit]
+Description=amitOS System Health Monitor
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/amitos/scripts/amitos-check.sh --full
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=amitos-health

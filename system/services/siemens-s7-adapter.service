@@ -1,0 +1,34 @@
+# ============================================================================
+# amitOS — Siemens S7 Adapter Service
+# ============================================================================
+
+[Unit]
+Description=amitOS Siemens S7 Adapter (ISO-on-TCP)
+Documentation=https://github.com/Amitpwa/amitOS/blob/dev/docs/ADAPTERS.md
+After=network-online.target opcua-server.service
+Wants=network-online.target
+PartOf=amitos-adapters.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/opt/amitos/adapters/venv/bin/python3 -m amitos.adapters.siemens_s7 --config /etc/amitos/adapters/siemens-s7.yaml
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=/opt/amitos/adapters
+
+LimitNOFILE=8192
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/log/amitos
+ConfigurationDirectory=amitos/adapters
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=siemens-s7-adapter
+
+[Install]
+WantedBy=amitos-adapters.target multi-user.target

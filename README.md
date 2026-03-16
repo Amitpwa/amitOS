@@ -1,10 +1,21 @@
-<div align="left">
+<div align="center">
+
+<img src="assets/amitos.svg" alt="amitOS Logo" width="200">
 
 # amitOS
 
-**AmitOS** is a lightweight, secure, and AI-enabled operating system built specifically for **industrial automation and edge computing**. Powered by a hardened **Debian core**, AmitOS is designed to bring simplicity, performance, and intelligence to modern industrial systems.
+**Industrial Automation OS · Edge AI · GPU-Powered**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-cyan.svg)](LICENSE)
+[![Debian](https://img.shields.io/badge/Base-Debian%20Bookworm-blue.svg)](https://www.debian.org/)
+[![CUDA](https://img.shields.io/badge/GPU-CUDA%2011%2B-green.svg)](docs/AI_GPU.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+</div>
 
 ---
+
+**amitOS** is a lightweight, secure, and AI-enabled operating system built specifically for **industrial automation and edge computing**. Powered by a hardened **Debian core** with a custom-tuned kernel, amitOS brings simplicity, performance, and intelligence to modern industrial systems.
 
 ## 🚀 Key Features
 
@@ -28,6 +39,18 @@
   - cuDNN and NCCL
 - Docker & container-native development support
 - Simple runtime environment for deploying AI on the edge
+
+### 🖥️ User Experience & Desktop GUI
+- **GUI Installer Setup Wizard** for a frictionless installation experience
+- **Post-Installation Desktop GUI** (XFCE4) available via `--desktop` flag
+- Headless options still fully supported for minimal edge deployments
+
+### 💽 amitFS — Universal Filesystem
+- Built-in **amitFS framework** supporting ALL major filesystems seamlessly:
+  - Linux (EXT4, BTRFS, XFS)
+  - Windows & Removables (NTFS3, FAT32, exFAT)
+  - Flash-optimized (F2FS)
+- Time-series optimized for high-speed industrial data logging
 
 ### 🔄 Adapter Framework
 Comes bundled with **5+ plug-and-play adapters**, including:
@@ -69,10 +92,29 @@ Comes bundled with **5+ plug-and-play adapters**, including:
 
 ## 📦 Installation
 
+amitOS provides both a visual setup wizard and a headless installer.
+
+**Option 1: GUI Setup Wizard (Recommended)**
 ```bash
 git clone https://github.com/yourusername/amitos.git
 cd amitos
-bash install.sh
+sudo ./gui-installer.sh
+```
+*Screenshots of the setup wizard:*
+<div align="center">
+  <img src="assets/screenshots/installer_desktop.png" width="45%">
+  <img src="assets/screenshots/installer_docker.png" width="45%">
+  <img src="assets/screenshots/installer_ready.png" width="45%">
+  <img src="assets/screenshots/installer_complete.png" width="45%">
+</div>
+
+<br>
+
+**Option 2: Headless Installation (Advanced)**
+```bash
+git clone https://github.com/yourusername/amitos.git
+cd amitos
+sudo bash install.sh --desktop 
 ```
 
 ## 🛠️ Roadmap

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============================================================================
+  amitOS — OPC UA Server Configuration (open62541)
+  ============================================================================
+  File location: /etc/amitos/opcua/server.xml
+  Documentation: docs/ARCHITECTURE.md
+  ============================================================================
+-->
+<OpcUaServer xmlns="urn:amitos:opcua:config">
+
+  <!-- Server Identity -->
+  <ApplicationName>amitOS OPC UA Server</ApplicationName>
+  <ApplicationUri>urn:amitos:opcua:server</ApplicationUri>
+  <ProductUri>urn:amitos:opcua</ProductUri>
+
+  <!-- Network Binding -->
+  <Endpoints>
+    <Endpoint>
+      <Url>opc.tcp://0.0.0.0:4840</Url>
+      <SecurityMode>SignAndEncrypt</SecurityMode>
+      <SecurityPolicy>Basic256Sha256</SecurityPolicy>
+    </Endpoint>
+    <Endpoint>
+      <Url>opc.tcp://0.0.0.0:4840</Url>
+      <SecurityMode>None</SecurityMode>
+      <SecurityPolicy>None</SecurityPolicy>
+    </Endpoint>
+  </Endpoints>
+
+  <!-- Security -->
+  <Security>
+    <CertificateFile>/etc/amitos/opcua/certs/server.der</CertificateFile>
+    <PrivateKeyFile>/etc/amitos/opcua/certs/server_key.der</PrivateKeyFile>
+    <TrustListDir>/etc/amitos/opcua/certs/trusted/</TrustListDir>
+    <RejectedDir>/etc/amitos/opcua/certs/rejected/</RejectedDir>
+    <AllowAnonymous>true</AllowAnonymous>
+  </Security>
+
+  <!-- Server Capabilities -->
+  <Limits>
+    <MaxSessions>100</MaxSessions>
+    <MaxSubscriptions>500</MaxSubscriptions>
+    <MaxMonitoredItems>10000</MaxMonitoredItems>
+    <MaxNodesPerRead>1000</MaxNodesPerRead>
+    <MaxNodesPerBrowse>1000</MaxNodesPerBrowse>
+    <MinPublishingInterval>100</MinPublishingInterval>
+    <MinSamplingInterval>50</MinSamplingInterval>
+  </Limits>
+
+  <!-- Discovery -->
+  <Discovery>
+    <Enabled>true</Enabled>
+    <Mdns>true</Mdns>
+    <ServerCapabilities>DA</ServerCapabilities>
+  </Discovery>
+
+  <!-- Logging -->
+  <Logging>
+    <Level>info</Level>
+    <File>/var/log/amitos/opcua-server.log</File>
+    <MaxFileSize>10485760</MaxFileSize>
+    <MaxFiles>5</MaxFiles>
+  </Logging>
+
+</OpcUaServer>

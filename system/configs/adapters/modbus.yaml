@@ -1,0 +1,71 @@
+# ============================================================================
+# amitOS — Modbus Adapter Configuration
+# ============================================================================
+# File location: /etc/amitos/adapters/modbus.yaml
+# Documentation: docs/ADAPTERS.md
+# ============================================================================
+
+adapter:
+  name: modbus
+  version: "1.0.0"
+  enabled: true
+  log_level: info  # debug | info | warning | error
+
+connection:
+  # Transport: tcp or rtu (serial)
+  transport: tcp
+
+  # TCP settings (used when transport = tcp)
+  tcp:
+    host: "192.168.1.10"
+    port: 502
+    timeout: 3.0         # seconds
+    retries: 3
+    retry_delay: 1.0     # seconds
+
+  # RTU settings (used when transport = rtu)
+  rtu:
+    port: "/dev/ttyUSB0"
+    baudrate: 9600
+    bytesize: 8
+    parity: "N"          # N (None), E (Even), O (Odd)
+    stopbits: 1
+    timeout: 3.0
+
+polling:
+  interval: 1.0          # seconds between poll cycles
+  batch_size: 10         # max registers per read request
+
+# Register mappings — map Modbus registers to OPC UA nodes
+registers:
+  - name: "temperature_sensor_1"
+    unit_id: 1
+    address: 0
+    count: 1
+    type: holding_register    # holding_register | input_register | coil | discrete_input
+    data_type: float32        # uint16 | int16 | uint32 | int32 | float32 | float64
+    byte_order: big           # big | little
+    scale: 0.1
+    offset: 0
+    unit: "°C"
+    opcua_node: "ns=2;s=Temperature.Sensor1"
+
+  - name: "pressure_sensor_1"
+    unit_id: 1
+    address: 2
+    count: 2
+    type: holding_register
+    data_type: float32
+    byte_order: big
+    scale: 1.0
+    offset: 0
+    unit: "bar"
+    opcua_node: "ns=2;s=Pressure.Sensor1"
+
+  - name: "valve_status"
+    unit_id: 1
+    address: 0
+    count: 1
+    type: coil
+    data_type: bool
+    opcua_node: "ns=2;s=Valve.Status"

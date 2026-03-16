@@ -1,5 +1,23 @@
 # Changelog
 
+## [Unreleased] — Kernel & Build Infrastructure
+
+### Added
+- **Kernel configuration fragment** (`kernel/config-amitos.fragment`) — PREEMPT, CAN bus, IIO sensors, USB-serial, SPI/I2C/GPIO, container support, GPU infrastructure, security hardening
+- **Kernel build script** (`kernel/build-kernel.sh`) — automated kernel compilation from Debian sources (amd64 + arm64)
+- **Kernel runtime tuning** (`kernel/sysctl-amitos.conf`) — network, scheduling, memory, and security optimizations
+- **Kernel module loader** (`kernel/modules-load.conf`) — auto-load overlay, br_netfilter, nf_tables at boot
+- **systemd services** — OPC UA server, 5 adapter services (Modbus, MQTT, Siemens S7, BACnet, REST bridge), health monitor timer
+- **Adapter YAML configs** — production-ready configs for all 5 built-in adapters with OPC UA node mappings
+- **OPC UA server config** (`system/configs/opcua/server.xml`) — dual endpoints, cert paths, session limits, mDNS discovery
+- **Nginx reverse proxy config** — TLS, rate limiting, security headers, REST API + Dashboard upstreams
+- **Utility scripts** — `amitos-info` (system info), `amitos-check` (health check), `amitos-adapter` (adapter management CLI)
+- **OS image builder** (`build/build-image.sh`) — debootstrap-based image generation with GPT partitioning
+- **Install script** (`install.sh`) — transforms bare Debian into amitOS with 8-step automated setup
+- **Makefile** — top-level build orchestration (`make kernel`, `make image`, `make install`, `make lint`, `make clean`)
+- **Kernel documentation** (`docs/KERNEL.md`) — config overview, build instructions, sysctl guide, RT-PREEMPT upgrade path
+- **Updated architecture** (`docs/ARCHITECTURE.md`) — added Kernel Layer and Build System sections
+
 All notable changes to **amitOS** will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

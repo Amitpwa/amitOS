@@ -33,6 +33,12 @@ This document describes the layered system architecture of **amitOS**, an indust
 └───────────────────────────┬─────────────────────────────────┘
                             │
 ┌───────────────────────────▼─────────────────────────────────┐
+│                    KERNEL LAYER                              │
+│         PREEMPT Scheduling · CAN Bus · Industrial I/O       │
+│     sysctl Tuning · Module Management · Watchdog · IOMMU    │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+┌───────────────────────────▼─────────────────────────────────┐
 │                    CORE OS LAYER                             │
 │            Hardened Debian Linux (x86_64 / ARMv8)           │
 │     System Services · Package Management · Security Policies │
@@ -51,7 +57,28 @@ The foundation of amitOS is a **hardened Debian Linux** base system.
 - **Init system**: systemd
 - **Package management**: apt with pinned security sources
 - **Security hardening**: Reduced attack surface, minimal installed packages, AppArmor profiles
-- **Kernel**: Patched for real-time or near-real-time performance where required
+
+### 1.5. Kernel Layer
+
+A **custom-configured Linux kernel** built via config fragment on top of the Debian default:
+
+| Component | Purpose |
+|---|---|
+| **PREEMPT scheduling** | Soft real-time for OPC UA polling (500ms–1s) |
+| **CAN bus** | Industrial Controller Area Network support |
+| **Industrial I/O (IIO)** | ADC, temperature, pressure, IMU sensors |
+| **USB-serial** | FTDI, PL2303, CP210x, CH341 for edge hardware |
+| **SPI / I2C / GPIO** | Direct hardware bus access |
+| **Watchdog** | Auto-recovery on system hang |
+| **Container support** | cgroups v2, namespaces, overlayfs |
+| **IOMMU** | GPU passthrough for Docker containers |
+| **sysctl tuning** | Optimized networking, scheduling, and memory |
+
+- Kernel config fragment: `kernel/config-amitos.fragment`
+- Runtime tuning: `kernel/sysctl-amitos.conf` → `/etc/sysctl.d/99-amitos.conf`
+- Module loading: `kernel/modules-load.conf` → `/etc/modules-load.d/amitos.conf`
+
+See [KERNEL.md](KERNEL.md) for the full kernel guide.
 
 ### 2. Networking Layer
 
@@ -147,3 +174,19 @@ Modbus Adapter  ──►  Internal Message Bus  ──►  OPC UA Server
 3. **Edge-Optimized** — Designed to run on resource-constrained edge hardware
 4. **Protocol Agnostic** — Adapters abstract away protocol differences
 5. **AI-Native** — AI inference is a first-class citizen, not an afterthought
+
+---
+
+## Build System
+
+amitOS ships with a complete build & installation toolchain:
+
+| Tool | Purpose |
+|---|---|
+| `make kernel` | Build custom amitOS kernel `.deb` packages |
+| `make image` | Build bootable OS image via debootstrap |
+| `make install` | Run `install.sh` to transform Debian → amitOS |
+| `make lint` | Validate shell scripts (shellcheck) and YAML configs |
+| `make clean` | Remove all build artifacts |
+
+See [KERNEL.md](KERNEL.md) for kernel details and [GETTING_STARTED.md](GETTING_STARTED.md) for install instructions.
