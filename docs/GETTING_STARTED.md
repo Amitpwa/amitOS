@@ -170,6 +170,7 @@ sudo nano /etc/amitos/adapters/modbus.yaml
 
 ## Next Steps
 
+- 🚀 **[amitOS in Action: Hands-On Quickstart](AMITOS_IN_ACTION.md)** — Try out 5 practical features of amitOS today!
 - 📖 [Architecture Overview](ARCHITECTURE.md)
 - 🔌 [Adapter Framework Guide](ADAPTERS.md)
 - 🤖 [AI & GPU Setup](AI_GPU.md)

@@ -20,6 +20,12 @@ if [[ "${ARCH}" != "amd64" ]]; then
     exit 0
 fi
 
+# Detect if an NVIDIA GPU is present
+if ! lspci 2>/dev/null | grep -iq "NVIDIA"; then
+    echo "[HOOK] No NVIDIA GPU detected. Skipping NVIDIA CUDA setup."
+    exit 0
+fi
+
 echo "[HOOK] Setting up NVIDIA CUDA repository..."
 
 chroot "${ROOTFS}" /bin/bash -c '

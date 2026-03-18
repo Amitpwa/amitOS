@@ -30,7 +30,7 @@ readonly HOOKS_DIR="${SCRIPT_DIR}/hooks"
 ARCH="amd64"
 SUITE="bookworm"
 MIRROR="http://deb.debian.org/debian"
-IMAGE_SIZE="4G"
+IMAGE_SIZE="12G"
 AMITOS_VERSION="$(cat "${PROJECT_ROOT}/VERSION" 2>/dev/null || echo '0.3.0-dev')"
 OUTPUT_NAME=""
 
@@ -135,6 +135,7 @@ ff02::2     ip6-allrouters
 EOF
 
     # --- Version File ---
+    mkdir -p "${ROOTFS_DIR}/etc/amitos"
     echo "${AMITOS_VERSION}" > "${ROOTFS_DIR}/etc/amitos/version"
 
     # --- Filesystem structure ---
@@ -308,15 +309,15 @@ main() {
     cat << 'LOGO'
         ╭──────────────────────────╮
         │  ██                      │
-        │ ████       ╭──────╮     │
-        │ ████       │ ╭──╮ │     │
-        │  ██        │ ╰──╯ │     │
-        │            ╰──────╯     │
+        │ ████       ╭──────╮      │
+        │ ████       │ ╭──╮ │      │
+        │  ██        │ ╰──╯ │      │
+        │            ╰──────╯      │
         ╰──────────────────────────╯
 LOGO
     echo -e "\033[1;37m"
     cat << 'TEXT'
-       ██████╗ ███╗   ███╗██╗████████╗ ██████╗ ███████╗
+       █████╗ ███╗   ███╗██╗████████╗ ██████╗ ███████╗
       ██╔══██╗████╗ ████║██║╚══██╔══╝██╔═══██╗██╔════╝
       ███████║██╔████╔██║██║   ██║   ██║   ██║███████╗
       ██╔══██║██║╚██╔╝██║██║   ██║   ██║   ██║╚════██║

@@ -1,0 +1,23 @@
+# Build artifacts
+build/rootfs/
+build/output/
+/build/rootfs/
+/build/output/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+
+# Virtual environments
+venv/
+.env
+
+# Go binaries and builds if applicable
+*.exe
+*.test
+
+# Logs
+*.log

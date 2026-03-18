@@ -15,7 +15,7 @@
 
 ---
 
-**amitOS** is a lightweight, secure, and AI-enabled operating system built specifically for **industrial automation and edge computing**. Powered by a hardened **Debian core** with a custom-tuned kernel, amitOS brings simplicity, performance, and intelligence to modern industrial systems.
+**amitOS** is a full, standalone **industrial operating system** built specifically for edge computing and automation. While it is built upon a hardened Debian Linux core, it is a complete OS replacement with a custom-tuned kernel, the unique `amitfs` filesystem layer, and built-in edge intelligence.
 
 ## 🚀 Key Features
 
@@ -92,29 +92,35 @@ Comes bundled with **5+ plug-and-play adapters**, including:
 
 ## 📦 Installation
 
-amitOS provides both a visual setup wizard and a headless installer.
+> **🔥 Want to test-drive amitOS right now?** Check out the [amitOS In Action: 5-Minute Practical Guide](docs/AMITOS_IN_ACTION.md) for a step-by-step tutorial on compiling the OS image and booting it today!
 
-**Option 1: GUI Setup Wizard (Recommended)**
+As a full Operating System, amitOS is designed to be flashed to a bare-metal device or run in a virtual machine as a comprehensive environment.
+
+**👉 See the full [Installation Guide](docs/INSTALLATION.md) for detailed instructions on building and flashing bootable OS images (`.img`).**
+
+### Building the Bootable OS Image (Bare-Metal / VM)
+
+Use the built-in image builder to compile a raw `.img` file from scratch that you can flash to a target Industrial PC or USB Drive.
+
 ```bash
-git clone https://github.com/yourusername/amitos.git
-cd amitos
-sudo ./gui-installer.sh
+git clone https://github.com/Amitpwa/amitOS.git
+cd amitOS
+
+# Build the default x86_64 raw OS image
+make image
+
+# Write the image to your USB Drive/SD Card (for physical hardware)
+sudo dd if=build/output/amitOS-0.3.0-dev-amd64.img of=/dev/sdX bs=4M status=progress
 ```
-*Screenshots of the setup wizard:*
-<div align="center">
-  <img src="assets/screenshots/installer_desktop.png" width="45%">
-  <img src="assets/screenshots/installer_docker.png" width="45%">
-  <img src="assets/screenshots/installer_ready.png" width="45%">
-  <img src="assets/screenshots/installer_complete.png" width="45%">
-</div>
 
-<br>
+### In-Place System Transformation (Legacy)
 
-**Option 2: Headless Installation (Advanced)**
+If you already have a live server running Debian 12 and cannot wipe the drives, you can use our script to mutate the existing Debian OS into amitOS:
+
 ```bash
-git clone https://github.com/yourusername/amitos.git
-cd amitos
-sudo bash install.sh --desktop 
+git clone https://github.com/Amitpwa/amitOS.git
+cd amitOS
+sudo ./gui-installer.sh
 ```
 
 ## 🛠️ Roadmap
